@@ -6,3 +6,61 @@ const EXAMPLE_SENATORS = [
 ];
 
 /* Your code goes here */
+export class App extends Component {
+  render() {
+    let senatorsArray = this.props.senators;
+    return (
+      <div className="container">
+        <h1>US Senators 2019</h1>
+        <SenatorTable senators={senatorsArray}/>
+      </div>
+
+    )
+  }
+}
+
+export class SenatorTable extends Component {
+  render() {
+    let senatorsArray = this.props.senators;
+    return (
+      <table className="table table-bordered">
+        <TableHeader cols={["Name", "State", "Phone", "Twitter"]} />
+          <tbody>
+            {senatorsArray.map((person) => {
+              return (<SenatorRow senator={person} key ={person.id} />)
+            })}
+          </tbody>
+      </table>
+    )
+  }
+}
+
+export class TableHeader extends Component {
+  render() {
+    /* prop */
+    return (
+      <thead>
+        <tr>
+        {this.props.cols.map((header) => {
+        return <th key={header}>{header}</th>
+        })}
+        </tr>
+      </thead>
+    )
+  }
+}
+
+export class SenatorRow extends Component {
+  render() {
+    //TODO FORMAT
+    let twitterHandle = 'https://twitter.com/user_name';
+    return (
+      <tr>
+        <td>{this.props.senator.name}</td>
+        <td>{this.props.senator.party.substring(0,1) + " - " + this.props.senator.state}</td>
+        <td><a href={'tel:' + this.props.senator.phone}>{this.props.senator.phone}</a></td>
+        <td><a href={twitterHandle.replace('user_name', this.props.senator.twitter)}>{'@' + this.props.senator.twitter}</a></td>
+      </tr>
+    )
+  }
+}
